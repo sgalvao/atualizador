@@ -55,7 +55,7 @@ async function unzip(){
 
 var execute = function(){
     console.log("Executando");
-    exec("Funcionei.txt", function(err, data) {  
+    exec("Setup.exe", function(err, data) {  
          console.log(err)
          console.log("###Concluído!!###");                       
      });
