@@ -3,7 +3,7 @@ const fs = require('fs');
 const decompress = require('decompress');
 const { exec } = require('child_process');
 
-function downloadFile() {
+function updateFile() {
     var received_bytes = 0;
     var total_bytes = 0;
     const file_url = ""
@@ -25,11 +25,15 @@ function downloadFile() {
         
         received_bytes += chunk.length;
 
-        showProgress(received_bytes, total_bytes);
+        progressBar(received_bytes, total_bytes);
     });
 
     req.on('end', function() {
         setTimeout(function(){ unzip() }, 2000);
+        setTimeout(function(){
+            fs.unlinkSync('./unzipme.zip')
+            console.log('### Deletando Zip ###')
+            },2000)
         setTimeout(function(){ execute() }, 5000);
         
     });
@@ -37,7 +41,7 @@ function downloadFile() {
    
 }
 
-function showProgress(received,total){
+function progressBar(received,total){
     var percentage = (received * 100) / total;
     console.log(Math.floor(percentage) + "% | " + received + " bytes out of " + total + " bytes.");
 }
@@ -45,7 +49,7 @@ function showProgress(received,total){
 async function unzip(){
     try{
       await decompress('unzipme.zip', __dirname).then(files => {
-      console.log('done!');
+      console.log('### Extraido ###');
     })
     } catch(err){
     
@@ -54,13 +58,13 @@ async function unzip(){
 }
 
 var execute = function(){
-    console.log("Executando");
+    console.log("### Executando aplicativo ###");
     exec("Setup.exe", function(err, data) {  
-         console.log(err)
-         console.log("###Concluído!!###");                       
+         console.log(err,"### Erro na execução ###")
+         console.log("### Concluído ###");                       
      });
  }
  
 
 
-downloadFile()
+updateFile()
