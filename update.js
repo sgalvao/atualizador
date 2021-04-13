@@ -3,75 +3,93 @@ const fs = require('fs');
 const decompress = require('decompress');
 const { exec } = require('child_process');
 
-const data = new Date()
 
+const service = "Setup"
+const nfse = "Setup_ServiceNFSe"
+const data = new Date();
+const ano = data.getFullYear();
+const mes = () => {
+    let correctMonth = data.getMonth() + 1;
+    if(correctMonth < 10){ correctMonth = "0"+ correctMonth}
+    return correctMonth
+}
+const dia = data.getDate();
+
+    // DOWNLOAD FUNCTION
 function updateFile() {
-    var received_bytes = 0;
-    var total_bytes = 0;
+    let received_bytes = 0;
+    let total_bytes = 0;
     const file_url = "https://www.insidesistemas.com.br/nfse.zip"
-    const targetPath = "C:\\Users\\silvi\\Desktop\\atualizadorfinal\\unzipme.zip"
-    var req = request({
+    const targetPath = "C:\\Users\\silvio.galvao\\Desktop\\atualizador\\unzipme.zip"
+    let req = request({
         method: 'GET',
         uri: file_url,
     });
 
-    var out = fs.createWriteStream(targetPath);
+    let out = fs.createWriteStream(targetPath);
     req.pipe(out);
 
-    req.on('response', function ( data ) {
-      
-        total_bytes = parseInt(data.headers['content-length' ]);
+    req.on('response', function (data) {
+
+        total_bytes = parseInt(data.headers['content-length']);
     });
 
-    req.on('data', function(chunk) {
-        
+    req.on('data', function (chunk) {
+
         received_bytes += chunk.length;
 
         progressBar(received_bytes, total_bytes);
     });
 
-    req.on('end', function() {
-        setTimeout(function(){ unzip() }, 2000);
-        setTimeout(function(){fs.rename('Setup_ServiceNFSe.exe', 'unziped.exe', function (){
-            console.log('executei')
-        })}, 3000)
-        setTimeout(function(){
-            fs.unlinkSync('./unzipme.zip')
-            console.log('### Deletando Zip ###')
-            },2000)
-        setTimeout(function(){ execute() }, 5000);
+    req.on('end', function () {
+        setTimeout(function () { unzip() }, 2000);
+        setTimeout(function () { // FUNÇÃO RENOMEAR ARQUIVO
+            fs.rename(nfse + '.exe', `${nfse}_${rename()}.exe`, function () {
+                console.log('### Renomeado ###')
+            })
+        }, 2600)
+        setTimeout(function () { execute() }, 5000);
+        setTimeout(function () { fs.unlinkSync('./unzipme.zip') }, 2000) // DELETANDO ARQUIVO .ZIP
 
     });
 
-   
 }
 
-function progressBar(received,total){
-    var percentage = (received * 100) / total;
+
+    // PROGRESSO DO DOWNLOAD
+function progressBar(received, total) {
+    let percentage = (received * 100) / total;
     console.log(Math.floor(percentage) + "% | " + received + " bytes out of " + total + " bytes.");
 }
 
-async function unzip(){
-    try{
-      await decompress('unzipme.zip', __dirname).then(files => {
-      console.log('### Extraido ###');
-    })
-    } catch(err){
-    
-      return console.log(err)
-    } 
+
+
+    // EXTRAINDO ARQUIVO
+async function unzip() {
+    try {
+        await decompress('unzipme.zip', __dirname).then(files => {
+            console.log('### Extraido ###');
+        })
+    } catch (err) {
+
+        return console.log("error")
+    }
 }
 
-var execute = function(){
-    console.log("### Executando aplicativo ###");
-    exec("unziped.exe", function(err,data) {  
-         console.log(data,"### Concluído ###");
-         console.log(err)                       
-     });
-    
-     
- }
- 
 
+    // EXECUTAR ARQUIVO
+let execute = function () {
+    console.log("### Executando aplicativo ###");
+    exec(`${nfse}_${rename()}.exe`, function (err) {
+        // console.log(err) test 
+        console.log("### Concluído ###");
+    });
+}
+    // RENOMEANDO BASEADO NA DATA
+function rename() {
+    const renamed = dia + "" + mes() + "" + ano;
+    return renamed
+
+}
 
 updateFile()
