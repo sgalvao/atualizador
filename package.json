@@ -1,7 +1,7 @@
 {
   "name": "lala",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "update.js",
   "license": "MIT",
   "dependencies": {
     "decompress": "^4.2.1",

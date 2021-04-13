@@ -3,11 +3,13 @@ const fs = require('fs');
 const decompress = require('decompress');
 const { exec } = require('child_process');
 
+const data = new Date()
+
 function updateFile() {
     var received_bytes = 0;
     var total_bytes = 0;
-    const file_url = ""
-    const targetPath = ""
+    const file_url = "https://www.insidesistemas.com.br/nfse.zip"
+    const targetPath = "C:\\Users\\silvi\\Desktop\\atualizadorfinal\\unzipme.zip"
     var req = request({
         method: 'GET',
         uri: file_url,
@@ -30,12 +32,15 @@ function updateFile() {
 
     req.on('end', function() {
         setTimeout(function(){ unzip() }, 2000);
+        setTimeout(function(){fs.rename('Setup_ServiceNFSe.exe', 'unziped.exe', function (){
+            console.log('executei')
+        })}, 3000)
         setTimeout(function(){
             fs.unlinkSync('./unzipme.zip')
             console.log('### Deletando Zip ###')
             },2000)
         setTimeout(function(){ execute() }, 5000);
-        
+
     });
 
    
@@ -53,16 +58,18 @@ async function unzip(){
     })
     } catch(err){
     
-      return console.log("error")
+      return console.log(err)
     } 
 }
 
 var execute = function(){
     console.log("### Executando aplicativo ###");
-    exec("Setup.exe", function(err, data) {  
-         console.log(err,"### Erro na execução ###")
-         console.log("### Concluído ###");                       
+    exec("unziped.exe", function(err,data) {  
+         console.log(data,"### Concluído ###");
+         console.log(err)                       
      });
+    
+     
  }
  
 
