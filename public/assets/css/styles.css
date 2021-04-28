@@ -66,8 +66,8 @@ select > option {
 img {
     width: 71px;
     height: 30.76px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     align-self: left;
 }
 
@@ -109,7 +109,15 @@ button:hover{
 
 
 
-
+.container-progress {
+    margin-right: 100px;
+    height: 50px;
+    width: 130px;
+    background-color: var(--light-color);
+    border-radius: 12px;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+  }
 
 .container-progress > span {
     font-family: Roboto;
@@ -120,15 +128,7 @@ button:hover{
     color: rgba(185, 163, 227, 0.7);
     margin-left: 69px;
 }
-.container-progress {
-    margin-right: 100px;
-    height: 50px;
-    width: 130px;
-    background-color: var(--light-color);
-    border-radius: 12px;
-    box-sizing: border-box;
-    margin-bottom: 30px;
-  }
+
   
   .progress {
     flex:1;

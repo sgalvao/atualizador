@@ -21,6 +21,7 @@ function clickEvent() {
         progressBar.innerHTML = width + "%";
       } else {
         clearInterval(count);
+        progressBar.remove()
         start.style.background = '';
         start.disabled = false;
         
