@@ -10,8 +10,43 @@
     flex-direction: column;
 
 }
+.containerCloseBtn {
+   top: 5px;
+    left: 285px;
+    position: absolute;
+}
 
-#teste11 {
+.open-close-btn {
+    display: block;
+    margin: auto;
+    width: 28px; height: 28px;
+    vertical-align: middle;
+    line-height: 23px;
+    color: #333;
+    text-decoration: none;
+    font-size: 28px;
+    border: 3px solid transparent;
+    text-align: center;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    border-radius: 50%;
+    font-family: Roboto;
+    opacity: 0.5;
+    left: 50px;
+    
+   
+}
+
+.open-close-btn:hover {
+    opacity: 1;
+    color: purple;
+    border: 3px solid grey;
+    transform: scale(0.8) rotateZ(90deg);
+  }
+
+
+
+select {
     border: 1px solid blueviolet;
     font-family: bebas neue;
     border-radius: 8px;
@@ -24,10 +59,17 @@
     padding: 5px;
 }
 
-#teste11 > option {
+select > option {
  letter-spacing: 15px;
 }
 
+img {
+    width: 71px;
+    height: 30.76px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-self: left;
+}
 
 button {
     width: 195.04px;
@@ -67,21 +109,16 @@ button:hover{
 
 
 
-img {
-    width: 71px;
-    height: 30.76px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    align-self: left;
-}
 
-span {
+
+.container-progress > span {
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
     letter-spacing: 0.08em;
     color: rgba(185, 163, 227, 0.7);
+    margin-left: 69px;
 }
 .container-progress {
     margin-right: 100px;
@@ -90,6 +127,7 @@ span {
     background-color: var(--light-color);
     border-radius: 12px;
     box-sizing: border-box;
+    margin-bottom: 30px;
   }
   
   .progress {
