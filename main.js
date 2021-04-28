@@ -1,7 +1,6 @@
 const { app, BrowserWindow, TouchBarScrubber } = require('electron')
 const path = require('path')
 
-
 function createWindow () {
   const win = new BrowserWindow({
     width: 348,
@@ -35,3 +34,4 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
