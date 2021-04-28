@@ -1,0 +1,121 @@
+.container{
+    position: absolute;
+    width: 341px;
+    height: 218.29px;
+    align-items: center;
+    justify-content: center;
+    background: #F0F2F3;
+    border-radius: 47.79px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#teste11 {
+    border: 1px solid blueviolet;
+    font-family: bebas neue;
+    border-radius: 8px;
+    width: 90px;
+    height: 30px;
+    margin-bottom: 10px;
+    outline: none;
+    background: #F0F2F3;
+    letter-spacing: 1.7px;
+    padding: 5px;
+}
+
+#teste11 > option {
+ letter-spacing: 15px;
+}
+
+
+button {
+    width: 195.04px;
+    height: 53.23px;
+    background: #744E96;
+    border-radius: 32.29px;
+    outline: none;
+    border: none;
+    font-family: Bebas Neue;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 31px;
+    line-height: 37px;
+    letter-spacing: 0.08em;
+    color: #F0F2F3;
+    margin-top: -20;
+}
+
+button:hover{
+    transition: 2s;
+    cursor: pointer;
+    transform: translateY(-5px);
+    background: linear-gradient(to right, #744E96, blueviolet);
+}
+
+.last-update{
+    font-family: Bebas Neue;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+
+    margin-top: 10px;
+
+    color: rgba(0, 0, 0, 0.45);
+}
+
+
+
+img {
+    width: 71px;
+    height: 30.76px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    align-self: left;
+}
+
+span {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: rgba(185, 163, 227, 0.7);
+}
+.container-progress {
+    margin-right: 100px;
+    height: 50px;
+    width: 130px;
+    background-color: var(--light-color);
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+  
+  .progress {
+    flex:1;
+    height: 30px;
+    width: 230px;
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+  
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    background: linear-gradient(to right, #744E96, blueviolet);
+    color: var(--light-color);
+    border-radius: 12px;
+    opacity: 0;
+    box-sizing: border-box;
+    font-family: bebas neue, sans-serif;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    font-size: 16px;
+    padding-left: 4px;
+    padding-top: 2px;
+    color:#F0F2F3
+  }
+
