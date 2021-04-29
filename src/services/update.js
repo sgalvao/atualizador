@@ -1,5 +1,5 @@
 const request = require('request');
-const fs = require('fs');
+const fs = require('fs'); 
 const decompress = require('decompress');
 const { exec } = require('child_process');
 // const readline = require("readline");
@@ -10,8 +10,8 @@ const { exec } = require('child_process');
 // });
 
 
-let file;
-let url;
+// let file;
+// let url;
 const runtime = "Runtime"
 const service = "Setup"
 const nfse = "Setup_ServiceNFSe"
