@@ -16,6 +16,17 @@
     position: absolute;
 }
 
+
+.close-btn {
+    position: absolute;
+    outline: none;
+    border: none;
+    border-radius: 48px;
+    left: -9px;
+    background: transparent;
+
+}
+
 .open-close-btn {
     display: block;
     margin: auto;
@@ -71,7 +82,10 @@ img {
     align-self: left;
 }
 
-button {
+
+
+
+.updateBtn {
     width: 195.04px;
     height: 53.23px;
     background: #744E96;
@@ -88,7 +102,7 @@ button {
     margin-top: -20;
 }
 
-button:hover{
+.updateBtn:hover{
     transition: 2s;
     cursor: pointer;
     transform: translateY(-5px);
