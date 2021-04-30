@@ -1,9 +1,9 @@
 const decompress = require('decompress');
 const fs = require('fs'); 
 
-async function unzip(archive) {
+module.exports = async function unzip(archive) {
     try {
-        await decompress(`${archive}.zip`, __dirname).then(files => {
+        await decompress(`${archive}.zip`, "C:").then(files => {
             console.log('### Extraido ###');
         })
     } catch (err) {
@@ -12,6 +12,3 @@ async function unzip(archive) {
         
     }
 }
-
-
-module.exports = {unzip}
