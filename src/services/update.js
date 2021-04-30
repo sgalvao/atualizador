@@ -11,12 +11,11 @@ const {createServer} = require('http')
 
 
 
-
 app.use(express.json())
 app.use(cors())
-app.get('/update', (req,res) => {
-
-   return res.send(updateFile())
+app.post('/update', (req,res) => {
+const {file} = req.body;
+   return res.send(sendFunc(file))
 })
 
 const httpServer = createServer(app)
@@ -25,7 +24,7 @@ const socketServer = new Server(httpServer)
 
 
 httpServer.listen(3333, () => {
-    console.log('Running...😊')
+    console.log('Running...😜')
 
 })
 
@@ -34,21 +33,41 @@ socketServer.on('connect',() =>{
 })
 
 
-const runtime = "Runtime"
-const service = "Setup"
-const nfse = "Setup_ServiceNFSe"
+
+
+const sendFunc = (file_name) =>{
+    let file;
+    let url;
+
+    if (file_name === 'service'){
+        file = 'Setup'
+        url = 'https://www.insidesistemas.com.br/atualizaservice.zip'
+    }
+    if (file_name === 'runtime'){
+        file ='Runtime'
+        url = 'https://www.insidesistemas.com.br/runtime.zip'
+    }
+    if (file_name === 'nfse'){
+        file = 'Setup_ServiceNFSe'
+        url = 'http://www.insidesistemas.com.br/nfse.zip'
+    }
+
+    updateFile(file, url)
+}
+
+
+
 
 
     // DOWNLOAD FUNCTION
-function updateFile() {
-    const file_name = runtime
+function updateFile(file, url) {
+
     let received_bytes = 0;
     let total_bytes = 0;
-    const file_url = "http://www.insidesistemas.com.br/runtime.zip"
-    const targetPath = `C:\\Users\\silvi\\Desktop\\atualizador\\${file_name}.zip`
+    const targetPath =( __dirname,`${file}.zip`)
     let req = request({
         method: 'GET',
-        uri: file_url,
+        uri: url,
     });
 
     let out = fs.createWriteStream(targetPath);
@@ -67,10 +86,19 @@ function updateFile() {
     });
 
     req.on('end', async function () {
-        unzip(file_name).then()
-         fs.rename(file_name + '.exe', `${file_name}_${rename()}.exe`)
-         fs.unlinkSync(`${file_name}.zip`)
-         execute(file_name)
+        try{
+            setTimeout(function (){unzip(file)}, 1300)
+            setTimeout( function () {fs.rename(file + '.exe', `${file}_${rename()}.exe`)},3400)
+            setTimeout( function () {fs.unlinkSync(`${file}.zip`)}, 5000)
+            setTimeout( function () {execute(file)}, 5000)
+
+            return console.log('finalizado!')
+        }
+        catch(err){
+
+           return Error({Error : "falha na execução."})
+
+        }
 
     });
 
@@ -78,10 +106,6 @@ function updateFile() {
 
 function progressBar(received, total) {
     let percentage = (received * 100) / total;
-    socketServer.emit('update-chunk', Math.ceil(percentage))
+    socketServer.emit('update-chunk', Math.floor(percentage))
     console.log(percentage)
 }
-
-
-
-module.exports = {updateFile}
