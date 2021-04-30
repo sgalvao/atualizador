@@ -1,36 +1,51 @@
+const rename = require('./rename')
+const execute = require('./execute')
+const unzip = require('./unzip')
 const request = require('request');
 const fs = require('fs'); 
-const decompress = require('decompress');
-const { exec } = require('child_process');
-// const readline = require("readline");
-// const { RSA_X931_PADDING } = require('constants');
-// const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout
-// });
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const {Socket, Server} = require('socket.io')
+const {createServer} = require('http')
 
 
-// let file;
-// let url;
+
+
+app.use(express.json())
+app.use(cors())
+app.get('/update', (req,res) => {
+
+   return res.send(updateFile())
+})
+
+const httpServer = createServer(app)
+const socketServer = new Server(httpServer)
+
+
+
+httpServer.listen(3333, () => {
+    console.log('Running...😊')
+
+})
+
+socketServer.on('connect',() =>{
+    console.log("connected")
+})
+
+
 const runtime = "Runtime"
 const service = "Setup"
 const nfse = "Setup_ServiceNFSe"
-const data = new Date();
-const ano = data.getFullYear();
-const mes = () => {
-    let correctMonth = data.getMonth() + 1;
-    if(correctMonth < 10){ correctMonth = "0"+ correctMonth}
-    return correctMonth
-}
-const dia = data.getDate();
+
 
     // DOWNLOAD FUNCTION
 function updateFile() {
-    const file_name = service
+    const file_name = runtime
     let received_bytes = 0;
     let total_bytes = 0;
-    const file_url = "https://www.insidesistemas.com.br/atualizaservice.zip"
-    const targetPath = `C:\\Users\\silvio.galvao\\Desktop\\atualizador\\${file_name}.zip`
+    const file_url = "http://www.insidesistemas.com.br/runtime.zip"
+    const targetPath = `C:\\Users\\silvi\\Desktop\\atualizador\\${file_name}.zip`
     let req = request({
         method: 'GET',
         uri: file_url,
@@ -51,83 +66,22 @@ function updateFile() {
         progressBar(received_bytes, total_bytes);
     });
 
-    req.on('end', function () {
-        setTimeout(function () { unzip(file_name) }, 1300);
-        setTimeout(function () { // FUNÇÃO RENOMEAR ARQUIVO
-            fs.rename(file_name + '.exe', `${file_name}_${rename()}.exe`, function () {
-                console.log('### Renomeado ###')
-            })
-        }, 3400)
-        setTimeout(function () { fs.unlinkSync(`${file_name}.zip`) }, 5000) // DELETANDO ARQUIVO .ZIP
-        setTimeout(function () { execute(file_name) }, 5000);
+    req.on('end', async function () {
+        unzip(file_name).then()
+         fs.rename(file_name + '.exe', `${file_name}_${rename()}.exe`)
+         fs.unlinkSync(`${file_name}.zip`)
+         execute(file_name)
 
     });
 
 }
 
-
-    // PROGRESSO DO DOWNLOAD
 function progressBar(received, total) {
     let percentage = (received * 100) / total;
-    console.log(Math.floor(percentage) + "% | " + received + " bytes out of " + total + " bytes.");
+    socketServer.emit('update-chunk', Math.ceil(percentage))
+    console.log(percentage)
 }
 
 
 
-    // EXTRAINDO ARQUIVO
-async function unzip(archive) {
-    try {
-        await decompress(`${archive}.zip`, __dirname).then(files => {
-            console.log('### Extraido ###');
-        })
-    } catch (err) {
-
-        return console.log("error")
-    }
-}
-
-
-    // EXECUTAR ARQUIVO
-let execute = function (archive) {
-    
-    console.log("### Executando aplicativo ###");
-    exec(`${archive}_${rename()}.exe`, function (err) {
-        // console.log(err) 
-        console.log("### Concluído ###");
-    });
-}
-    // RENOMEANDO BASEADO NA DATA
-function rename() {
-    const renamed = dia + "" + mes() + "" + ano;
-    return renamed
-
-}
-
-
-
-
-// rl.question("Qual ferramenta deseja baixar? ", function(file_name) {
-//         if (file_name === 'service'){
-//             file = 'https://www.insidesistemas.com.br/atualizaservice.zip'
-//             url = service
-//         }
-//        else if (file_name === 'runtime'){
-//             file = 'https://www.insidesistemas.com.br/runtime.zip'
-//             url = runtime
-//         }
-//         else if(file_name=== 'nfse'){
-//             file = 'https://www.insidesistemas.com.br/nfse.zip'
-//             url = nfse
-//         }
-//             updateFile(file, url)
-
-//         return console.log("Baixando o Arquivo da ferramenta:", url)
-            
-            
-        
-//     ;
-// });
-
-// rl.on("close", function() {
-//     process.exit(0);
-// });
+module.exports = {updateFile}

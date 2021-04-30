@@ -1,5 +1,7 @@
-const { app, BrowserWindow, TouchBarScrubber } = require('electron')
+const { app, BrowserWindow, } = require('electron')
 const path = require('path')
+const api = require('./src/services/update')
+
 
 function createWindow () {
   const win = new BrowserWindow({

@@ -1,4 +1,4 @@
-
+const rename = require('./rename')
 const { exec } = require('child_process');
 
 let execute = function (archive) {
@@ -10,8 +10,5 @@ let execute = function (archive) {
     });
 }
     // RENOMEANDO BASEADO NA DATA
-function rename() {
-    const renamed = dia + "" + mes() + "" + ano;
-    return renamed
 
-}
+module.exports =  {execute}

@@ -7,36 +7,37 @@ const lastUpdate = document.querySelector(".updateDate")
 start.addEventListener("click", clickEvent);
 async function  clickEvent() {
 
-  const response = await fetch('http://localhost:3333/execute', {
-    method: 'POST',
+  start.style.background = "#ccc";
+  progressComplete = 100;
+  lastUpdate.remove()
+  start.disabled = true;
+
+  const socket = io("http://localhost:3333")
+
+  socket.on('connect', () => {
+    socket.on('update-chunk', (chunk) => {
+      
+      if (chunk != progressComplete) {
+        progressBar.style.opacity = "1";
+        progressBar.style.width = chunk + "%";
+        progressBar.innerHTML = chunk + "%";
+      } else {
+        progressBar.innerHTML = chunk + "%";
+        start.style.background = '';
+        start.disabled = false;
+      }
+    })
+  })
+
+  const selected = document.querySelector('#file-name').value
+  const response = await fetch('http://localhost:3333/update', {
+    method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      file: file_name
-    })})
+    })
 
+      return response
 
-
-
-  //   console.log("entrei")
-  //   start.style.background = "#ccc";
-  //   let width = 0;
-  //   progressComplete = 100;
-  //   lastUpdate.remove()
-  //   start.disabled = true;
-  //   const count = setInterval(() => {
-  //     if (width != progressComplete) {
-  //       width++;
-  //       progressBar.style.opacity = "1";
-  //       progressBar.style.width = width + "%";
-  //       progressBar.innerHTML = width + "%";
-  //     } else {
-  //       clearInterval(count);
-  //       start.style.background = '';
-  //       start.disabled = false;
-        
-  //     }
-  // }, 30);
 }
