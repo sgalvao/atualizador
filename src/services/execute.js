@@ -1,14 +1,19 @@
 const rename = require('./rename')
 const { exec } = require('child_process');
 
-let execute = function (archive) {
+module.exports = function execute (archive) {
     
     console.log("### Executando aplicativo ###");
-    exec(`${archive}_${rename()}.exe`, function (err) {
-        // console.log(err) 
+    exec( `${archive}_${rename()}.exe`, function (err) {
+        console.log(err) 
         console.log("### Concluído ###");
     });
 }
     // RENOMEANDO BASEADO NA DATA
 
-module.exports =  {execute}
+ 
+    
+
+
+
+    
