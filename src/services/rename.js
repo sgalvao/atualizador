@@ -1,6 +1,6 @@
 
 
-function rename() {
+module.exports = function rename() {
     const data = new Date();
     const ano = data.getFullYear();
     let dia = data.getDate();
@@ -14,5 +14,3 @@ function rename() {
     return renamed
 
 }
-
-module.exports = {rename}
