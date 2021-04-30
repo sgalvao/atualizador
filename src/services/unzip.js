@@ -7,7 +7,8 @@ async function unzip(archive) {
             console.log('### Extraido ###');
         })
     } catch (err) {
-        alert("Erro ao Extrair")
+
+        console.log(err)
         
     }
 }
