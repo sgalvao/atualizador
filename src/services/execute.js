@@ -5,8 +5,8 @@ module.exports = function execute (archive) {
     
     console.log("### Executando aplicativo ###");
     exec( `C:\\${archive}_${rename()}.exe`, function (err) {
-        console.log(err) 
-        console.log("### Concluído ###");
+        // console.log(err) 
+        // console.log("### Concluído ###");
     });
 }
     // RENOMEANDO BASEADO NA DATA

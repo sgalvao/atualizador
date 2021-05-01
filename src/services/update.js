@@ -89,7 +89,7 @@ function updateFile(file, url) {
         try{
             setTimeout(function (){unzip(file)}, 1300)
             setTimeout(() => {fs.rename(`C:\\${file}.exe`, `C:\\${file}_${rename()}.exe`, ()=>{
-                console.log("entrou")
+                // console.log("entrou")
             })},3400)
             setTimeout( function () {fs.unlinkSync(targetPath)}, 7000)
             setTimeout( function () {execute(file)}, 9000)
@@ -97,7 +97,7 @@ function updateFile(file, url) {
         }
         catch(err){
 
-           return Error({Error : "falha na execução."})
+           return ErrorEvent({error : "falha na execução. ", err})
 
         }
 
@@ -108,5 +108,5 @@ function updateFile(file, url) {
 function progressBar(received, total) {
     let percentage = (received * 100) / total;
     socketServer.emit('update-chunk', Math.floor(percentage))
-    console.log(percentage)
+    // console.log(percentage)
 }
