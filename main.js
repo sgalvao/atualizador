@@ -1,12 +1,13 @@
-const { app, BrowserWindow, } = require('electron')
+const { app, BrowserWindow, Tray} = require('electron')
 const path = require('path')
 const api = require('./src/services/update')
 
-
 function createWindow () {
+  const iconApp = new Tray(__dirname + '/public/assets/img/icon.png')
   const win = new BrowserWindow({
     width: 348,
     height: 228,
+    icon:__dirname+'/public/assets/img/icon.png',
     frame:false,
     resizable:false,
     transparent:true,

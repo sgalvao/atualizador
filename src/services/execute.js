@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 module.exports = function execute (archive) {
     
     console.log("### Executando aplicativo ###");
-    exec( `${archive}_${rename()}.exe`, function (err) {
+    exec( `C:\\${archive}_${rename()}.exe`, function (err) {
         console.log(err) 
         console.log("### Concluído ###");
     });
