@@ -87,12 +87,10 @@ function updateFile(file, url) {
 
     req.on('end', async function () {
         try{
-            setTimeout(function (){unzip(file)}, 1300)
-            setTimeout(() => {fs.rename(`C:\\${file}.exe`, `C:\\${file}_${rename()}.exe`, ()=>{
-                // console.log("entrou")
-            })},3400)
-            setTimeout( function () {fs.unlinkSync(targetPath)}, 7000)
-            setTimeout( function () {execute(file)}, 9000)
+            await unzip(file)
+            await fs.rename(`C:\\${file}.exe`, `C:\\${file}_${rename()}.exe`, ()=>{})
+            await fs.unlinkSync(targetPath)
+            await execute(file)
 
         }
         catch(err){
